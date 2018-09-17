@@ -21,7 +21,7 @@
        <tr align="left">
        <td></td>
        	<td><input type ="submit" value = "Register"/></td>
-       	<td><a href = "/getUserList">Show User Data</a></td>
+       	<td><a href = "/getUserList">Show All Users Data</a></td>
        </tr>
        
        </table>
@@ -37,7 +37,7 @@
  <th>User ID</th>
  <th>User Name</th>
  <th>User Status</th>
- <th  colspan='3'>Edit/Update</th>
+ <th  colspan='3'>Edit/Update/Delete</th>
  
  </tr>
          <c:forEach items="${users}" var="user">
@@ -58,7 +58,7 @@
             
            
             <c:choose>
-			    <c:when test="${user.status == 'Active'}">
+			    <c:when test="${user.status == 'Activated'}">
 			      <td>
 	                <a href="<c:url value='/changePwd/${user.userId}'/>" >Change Password</a>
 	            </td>
@@ -78,7 +78,7 @@
 			    </c:otherwise>
 			</c:choose>                
              <td>
-               <a href="<c:url value='/deleteUser/${user.userId}'/>">Delete</a> 
+               <a href="<c:url value='/deleteUser/${user.userId}'/>">Delete User</a> 
             </td>
         </tr>
        
