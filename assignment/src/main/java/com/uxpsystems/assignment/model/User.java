@@ -26,7 +26,7 @@ public class User implements Serializable{
 	  private String password;
 	
 	@Column(name = "status", nullable = false )
-	  private String status = "Active";
+	  private String status = "Activated";
 	
 	
 		public Integer getUserId() {
