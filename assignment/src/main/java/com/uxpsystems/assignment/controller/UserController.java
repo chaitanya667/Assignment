@@ -22,10 +22,8 @@ public class UserController {
 	
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	  public ModelAndView register(@RequestParam(value = "username") String username,@RequestParam(value = "password") String password) {
-	    System.out.println("******Inside register method**********"+username); 
 	    if (username == null || password==null || username.length() <=0 || password.length() <=0)
 	    {
-	    	System.out.println("******Inside validation checks **********"); 
 	    	String validationMessage = "<br>Username/Password is not valid";
 	    	return new ModelAndView("index", "message", validationMessage);
 	    }
@@ -45,11 +43,8 @@ public class UserController {
 	  }
 	
 	@RequestMapping(value = "/getUserList", method = RequestMethod.GET)
-	  public ModelAndView getUserList() {
-	    System.out.println("******Inside getUserList method**********"); 
-	    
+	  public ModelAndView getUserList() {	    
 	    List<User> users = userService.getUserList();
-	    System.out.println("User retreived Succesfully"+users);
 	    if(users != null && users.size() > 0)
 	    {
 	    	return new ModelAndView("index", "users", users);
@@ -64,10 +59,8 @@ public class UserController {
 	
 	@RequestMapping(value = "/changePwd/editUser", method = RequestMethod.POST)
 	  public ModelAndView editUser(@RequestParam(value = "password") String password,
-			  @RequestParam(value = "userId") Integer id) {
-	    System.out.println("******Inside editUser method**********"); 
+			  @RequestParam(value = "userId") Integer id) { 
 	    userService.editUser(id,password);
-	    System.out.println("editUser: username retreived:"+id);
 	    String successMessage = "<br>User Password updated Succesfully for User ID : " +id+"<br>";
 		return new ModelAndView("index", "message", successMessage);
 	  }
@@ -75,25 +68,20 @@ public class UserController {
 
 	@RequestMapping(value = "/changePwd/{id}")
 	  public ModelAndView changePwdPage(@PathVariable(value = "id") Integer id) {
-	    System.out.println("******Inside changePwdPage method**********"); 
 	    User user = userService.getUser(id);
 	    return new ModelAndView("changePwd", "user", user);
 	  }
 	
 	@RequestMapping(value = "/deleteUser/{id}")
 	  public ModelAndView delUser(@PathVariable(value = "id") Integer id) {
-	    System.out.println("******Inside delUser method**********"); 
 	    userService.delUser(id);
-	    System.out.println("deleteUser: username retreived:"+id);
 	    String successMessage = "<br> User data deleted succesfully for User ID : " +id+"<br>";
 		return new ModelAndView("index", "message", successMessage);
 	  }
 	
 	@RequestMapping(value = "/activate/{id}")
 	  public ModelAndView activateUser(@PathVariable(value = "id") Integer id) {
-	    System.out.println("******Inside activateUser method**********"); 
-	    userService.updateUserStatus(id,"Active");
-	    System.out.println("activateUser: username activated:"+id);
+	    userService.updateUserStatus(id,"Activated");
 	    String successMessage = "<br> User activated succesfully for User ID : " +id+"<br>";
 		return new ModelAndView("index", "message", successMessage);
 		
@@ -101,9 +89,7 @@ public class UserController {
 	
 	@RequestMapping(value = "/deActivate/{id}")
 	  public ModelAndView deActivateUser(@PathVariable(value = "id") Integer id) {
-	    System.out.println("******Inside deActivateUser method**********"); 
-	    userService.updateUserStatus(id,"Deactive");
-	    System.out.println("deActivateUser: username deactivated:"+id);
+	    userService.updateUserStatus(id,"Deactivated");
 	    
 	    String successMessage = "<br> User deactivated succesfully for User ID : " +id+"<br>";
 		return new ModelAndView("index", "message", successMessage);
@@ -111,7 +97,6 @@ public class UserController {
 	
 	@RequestMapping(value = "/back")
 	  public ModelAndView backPage() {
-	    System.out.println("******Inside backPage method**********"); 
 	    return new ModelAndView("index", "", "");
 	  }
 }
