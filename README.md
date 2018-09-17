@@ -10,6 +10,7 @@ Requirement: create a maven project to implement a simple Spring based web appli
 These APIs will perform CRUD Operations using Hibernate as persistance framework on a User entity with at minimum the following fields
 id (long)/primary key
 username (String)/unique
+password
 status (String) / possible values: Activated/Deactivated
 
 Solution:
@@ -21,14 +22,13 @@ Apache Maven 3.5.4
 Web Server: jetty
 
 In Memory DB: HSQL DB
-Configuration 
-username: sa  
+username: sa 
 password: 
 
-Build/Run Commands
-cd assignment  --> project directory
-mvn clean install  --> clean and build
-mvn jetty:run  --> run this command once build is successfull. It automatically deploys the war file and runs.
+Build/Run Commands:
+ cd assignment  --> project directory.
+ mvn clean install  --> clean and build.
+ mvn jetty:run  --> run this command once build is successfull. It automatically deploys the war file and runs.
 
 URL: http://localhost:8080/
 
