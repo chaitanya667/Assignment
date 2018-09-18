@@ -36,7 +36,6 @@ public class UserController {
 	    User user = new User();
 	    user.setUsername(username);
 	    user.setPassword(password);
-	    //UserService us = new UserService();
 	    userService.register(user);
 	    String successMessage = "<br>User Registered Succesfully<br>";
 		return new ModelAndView("index", "message", successMessage);
