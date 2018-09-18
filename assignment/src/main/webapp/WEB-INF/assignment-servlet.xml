@@ -24,6 +24,4 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 	
-	<bean id="usrDaoImpl" class ="com.uxpsystems.assignment.dao.UserDaoImpl"></bean>
-
 </beans>
