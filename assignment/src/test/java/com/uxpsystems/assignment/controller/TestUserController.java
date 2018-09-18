@@ -1,106 +1,77 @@
-package com.uxpsystems.assignment.controller;
+package com.uxpsystems.assignment.service;
 
 import static org.junit.Assert.assertEquals;
-
-import java.util.List;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.uxpsystems.assignment.model.User;
 
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:/test-assignment-servlet.xml"})
-public class TestUserController {
-
+public class TestUserService {
 	@Autowired
-	private UserController userController;
-	@Autowired
-	private UserController userController1;
+	UserService userService;
 	
 
-	@Test
-	public void registerPosModelCheck()
-	{
-		
-		ModelAndView modelAndView1 = userController.register("test1", "testPwd1");
-		ModelAndView modelAndView2 = userController.register("123123", "234334");
-		System.out.println("Inside register");
-		assertEquals("index", modelAndView1.getViewName());
-		assertEquals("<br>User Registered Succesfully<br>", modelAndView1.getModel().get("message"));
-	}
 	
 	@Test
-	public void registerNegEmptyInputs()
-	{
-		ModelAndView modelAndView3 = userController.register("", "testPwd1");
-		ModelAndView modelAndView4 = userController.register("te345st1", "");
-		ModelAndView modelAndView5 = userController.register("", "");
-		System.out.println("Inside registerUsrNameEmpty");
-		assertEquals("index", modelAndView3.getViewName());
-		assertEquals("<br>Username/Password is not valid", modelAndView3.getModel().get("message"));
+	public void register() {
+		User user = new User();
+		user.setUsername("testSer");
+		user.setPassword("password");
+		userService.register(user);
+		assertTrue(userService.isUserNameExists(user.getUsername()));	
 		
-		assertEquals("index", modelAndView4.getViewName());
-		assertEquals("<br>Username/Password is not valid", modelAndView4.getModel().get("message"));
 		
-		assertEquals("index", modelAndView5.getViewName());
-		assertEquals("<br>Username/Password is not valid", modelAndView5.getModel().get("message"));
+		User user1 = new User();
+		user1.setUsername("testSer1");
+		user1.setPassword("password");
+		userService.register(user1);
+		assertTrue(userService.isUserNameExists(user1.getUsername()));	
+		
+		User user2 = new User();
+		user2.setUsername("testSer2");
+		user2.setPassword("password");
+		userService.register(user2);
+		assertTrue(userService.isUserNameExists(user2.getUsername()));	
+		
+		User user3 = new User();
+		user3.setUsername("testSer3");
+		user3.setPassword("password");
+		userService.register(user3);
+		assertTrue(userService.isUserNameExists(user3.getUsername()));	
 	}
+	
+	
+	@Test
+	public void editUser() {
+		userService.editUser(1,"password3");
 
+		assertEquals("password3",userService.getUser(1).getPassword());	
+	}
+	
+	
 	@Test
-	public void getUserListWithData()
-	{
-		System.out.println("Inside getUserList - success flow");
-		ModelAndView modelAndView6 = userController.register("ABCD", "ABDNN");
-		ModelAndView modelAndView7 = userController.register("CDFFAS", "DDASSDF");
-		ModelAndView modelAndView10 = userController.getUserList();
-		 List<User> users = (List<User>) modelAndView10.getModel().get("users");
-		 if (users != null && users.size() > 0)
-		 {
-			 assertEquals("index", modelAndView10.getViewName());
-		 }
-		 else
-		 {
-			 assertEquals("<br>No User Data to Display <br>", modelAndView10.getModel().get("message"));
-		 }
-		
+	public void delUser() {
+		User user = userService.getUser(3);
+		userService.delUser(3);	
+		assertFalse(userService.isUserNameExists(user.getUsername()));
 	}
 	
 	@Test
-	public void getUserListWithoutData()
-	{
-		ModelAndView modelAndView1 = new ModelAndView();
-		modelAndView1 = userController1.getUserList();   // No users are inserted
-		 List<User> users = (List<User>) modelAndView1.getModel().get("users");
-		 if (users != null && users.size() > 0)
-		 {
-			 assertEquals("index", modelAndView1.getViewName());
-		 }
-		 else
-		 {
-			 assertEquals("<br>No User Data to Display <br>", modelAndView1.getModel().get("message"));
-		 }
+	public void isUserNameExists() {
+		assertFalse(userService.isUserNameExists("sadss"));	
 	}
 	
 	@Test
-	public void editUser()
-	{
-		ModelAndView modelAndView1 = new ModelAndView();
-		modelAndView1 = userController.register("ABCD", "ABDNN");
-		modelAndView1 = userController.getUserList();
-		List<User> users = (List<User>) modelAndView1.getModel().get("users");
-		String newPassword = "sdfsdfdsf";
-		
-		modelAndView1 = userController.editUser(newPassword, users.get(0).getUserId());
-		assertEquals("index", modelAndView1.getViewName());
-		String successMessage = "<br>User Password updated Succesfully for User ID : " +users.get(0).getUserId()+"<br>";
-		assertEquals(successMessage, modelAndView1.getModel().get("message"));
+	public void updateUserStatus() {
+		userService.updateUserStatus(4,"Activated");	
+		assertEquals("Activated",userService.getUser(4).getStatus());	
 	}
 }
