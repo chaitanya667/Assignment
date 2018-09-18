@@ -4,20 +4,18 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.test.web.ModelAndViewAssert;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.uxpsystems.assignment.model.User;
 
-@WebAppConfiguration
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:/test-assignment-servlet.xml"})
 public class TestUserController {
@@ -27,9 +25,11 @@ public class TestUserController {
 	@Autowired
 	private UserController userController1;
 	
+
 	@Test
 	public void registerPosModelCheck()
 	{
+		
 		ModelAndView modelAndView1 = userController.register("test1", "testPwd1");
 		ModelAndView modelAndView2 = userController.register("123123", "234334");
 		System.out.println("Inside register");
